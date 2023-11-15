@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
+
 namespace GitSearch
 {
     public class Program
@@ -12,8 +14,9 @@ namespace GitSearch
 
             app.UseStaticFiles();
 
-            app.UseMiddleware<FindReposMiddleware>("https://api.github.com/search/repositories?q=asp.net+in:description+example+in:name");
-
+            app.UseMiddleware<MainPageMiddleware>();
+            app.UseMiddleware<FindReposMiddleware>();
+            app.UseMiddleware<ErrorPageMiddleware>();
             app.Run();
         }
     }
