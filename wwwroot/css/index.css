@@ -1,0 +1,345 @@
+:root {
+  /* Цвета */
+  --primary-color: #007bff;
+  --primary-color-hover: #0056b3;
+  --background-light: #f8f8f8;
+  --text-color: #333;
+  --border-color: #e5e5e5;
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+
+  /* Размеры шрифтов */
+  --font-size-small: 10px;
+  --font-size-base: 15px;
+  --font-size-medium: 18px;
+  --font-size-large: 28px;
+  --font-size-xlarge: 38px;
+}
+
+[data-theme="dark"] {
+  /* Цвета для тёмной темы */
+  --primary-color: #0d6efd;
+  --primary-color-hover: #0a58ca;
+  --background-light: #212529;
+  --text-color: #f8f9fa;
+  --border-color: #6c757d;
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: "Fira Code", monospace;
+  background-color: var(--background-light);
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Шапка сайта */
+.header {
+  padding: 15px 20px;
+  background: var(--background-light);
+  box-shadow: var(--box-shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: var(--font-size-large);
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+/* Стандартные стили ссылок навигации */
+.nav__list {
+  display: flex;
+}
+
+.nav__item:not(:last-child) {
+  margin-right: 20px;
+}
+
+.nav__link {
+  font-size: var(--font-size-base);
+  text-decoration: none;
+  color: var(--primary-color);
+  transition: 0.3s ease;
+}
+
+.nav__link:hover {
+  color: var(--primary-color-hover);
+}
+
+/* Основное содержимое */
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+/* Секция поиска */
+.search {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  box-shadow: var(--box-shadow);
+}
+
+.search-section {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.search-section__title,
+.results-section__title {
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+.search-section__title {
+  font-size: var(--font-size-xlarge);
+}
+
+.results-section__title {
+  font-size: var(--font-size-large);
+}
+
+.search-section__description,
+.card__visibility,
+.card__stack,
+.card__stars,
+.card__views,
+.card__forks,
+.card__created,
+.card__updated {
+  font-size: var(--font-size-base);
+  color: var(--text-color);
+  margin-bottom: 5px;
+}
+
+.search__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.search__field {
+  margin-bottom: 20px;
+}
+
+.search__label,
+.card__title {
+  font-size: var(--font-size-medium);
+}
+
+.search__label {
+  color: var(--text-color);
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.search__input,
+.search__input--description {
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  transition: border-color 0.2s ease-in-out;
+  width: 100%;
+}
+
+.search__input--description {
+  height: 100px;
+  resize: none;
+}
+
+.search__input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+.search__button {
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search__button:hover,
+.search__button:focus {
+  background-color: var(--primary-color-hover);
+}
+
+/* Карточки результатов */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-around;
+}
+
+.card {
+  flex-basis: calc(50% - 10px);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  box-shadow: var(--box-shadow);
+}
+
+.card__avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.card__info {
+  flex-grow: 1;
+}
+
+.card__title {
+  color: var(--text-color);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.card__link {
+  color: var(--primary-color);
+}
+
+.card__date,
+.card__stats {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Футер */
+.footer__company,
+.footer__opensource,
+.search__input,
+.search__input--description,
+.search__button,
+.card__link {
+  font-size: var(--font-size-base);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: var(--background-light);
+}
+
+.footer__company {
+  font-weight: 700;
+}
+
+.footer__company,
+.footer__opensource {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.footer__opensource {
+  color: var(--primary-color);
+}
+
+.footer__opensource:hover {
+  text-decoration: underline;
+}
+
+/* Меню кнопка и оверлей */
+.menu-button {
+  display: none;
+}
+
+.menu-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Адаптивность для маленьких экранов */
+@media (max-width: 768px) {
+  .card {
+    flex-basis: 100%;
+  }
+
+  .search-section__title {
+    font-size: var(--font-size-xlarge);
+  }
+
+  .nav {
+    position: fixed;
+    top: 0;
+    right: -250px;
+    width: 250px;
+    height: 100%;
+    background: white;
+    transition: right 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 60px;
+    z-index: 10;
+  }
+
+  .nav.open {
+    right: 0;
+  }
+
+  .nav.open + .menu-overlay {
+    display: block;
+    opacity: 1; /* Полная видимость оверлея */
+  }
+
+  .nav__list {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav__item {
+    padding: 10px 0;
+  }
+
+  .menu-overlay.open {
+    display: block;
+    opacity: 1;
+  }
+
+  .menu-button {
+    display: block;
+    background: none;
+    border: none;
+    font-size: var(--font-size-medium);
+    margin-left: auto;
+    padding: 5px;
+  }
+
+  .menu-button::before {
+    font-size: var(--font-size-large);
+    content: "☰";
+    color: var(--text-color);
+  }
+}

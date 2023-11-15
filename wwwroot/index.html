@@ -1,12 +1,98 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Поиск аналогов проектов на GitHub</title>
+    <!-- Стили css -->
+    <link rel="stylesheet" href="./css/default.css">
+    <link rel="stylesheet" href="./css/index.css">
+
+    <!-- Подключение шрифтов -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-    <h1>Тут должен быть фронт базовой страницы</h1>
+    <div class="page-wrapper">
+        <!-- Подключение скриптов -->
+        <script defer src="./js/menu-button.js"></script>
+        <script defer src="./js/theme-button.js"></script>
+        <script defer src="./js/main.js"></script>
+
+        <!-- Шапка сайта с логотипом и навигацией -->
+        <header class="header">
+            <div class="logo">> Quantum_Forge_Search</div>
+            <button class="menu-button" id="menuButton"></button>
+            <nav class="nav" id="nav">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="#" class="nav__link">Главная</a></li>
+                    <li class="nav__item"><a href="#" class="nav__link">О проекте</a></li>
+                    <li class="nav__item"><a href="#" class="nav__link">Контакты</a></li>
+                    <button id="theme-toggle">Переключить тему</button>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Основное содержимое страницы -->
+        <main class="content">
+            <section class="search-section">
+                <h1 class="search-section__title">Поиск репозиториев</h1>
+                <p class="search-section__description">Введите название и описание проекта для поиска аналогичных
+                    репозиториев на GitHub.</p>
+                <div class="search">
+                    <form class="search__form" id="search-form">
+                        <div class="search__field">
+                            <label for="project-name" class="search__label">Название проекта:</label>
+                            <input type="text" id="project-name" class="search__input search__input--name"
+                                placeholder="Введите название">
+                        </div>
+                        <div class="search__field">
+                            <label for="project-description" class="search__label">Описание проекта:</label>
+                            <textarea id="project-description" class="search__input search__input--description"
+                                placeholder="Введите описание"></textarea>
+                        </div>
+                        <button type="submit" class="search__button">Поиск</button>
+                    </form>
+                </div>
+            </section>
+
+            <section class="results-section">
+                <h2 class="results-section__title">Результаты поиска</h2>
+                <!-- Карточки репозитория -->
+                <div class="cards-container">
+                    <!-- <div class="card">
+                        <img src="avatar_url.jpg" alt="Аватар" class="card__avatar">
+                        <div class="card__info">
+                            <h3 class="card__title">Название репозитория</h3>
+                            <p class="card__visibility">Публичный</p>
+                            <p class="card__stack">Используемый стек: [Список технологий]</p>
+                            <p class="card__stats">
+                                <span class="card__stars">Количество звёзд: 123</span>
+                                <span class="card__views">Количество просмотров: 456</span>
+                                <span class="card__forks">Форков: 789</span>
+                            </p>
+                            <p class="card__date">
+                                <span class="card__created">Дата создания: 2017-04-04T19:47</span>
+                                <span class="card__updated">Дата обновления: 2023-07-11T00:03</span>
+                            </p>
+                            <a href="repo_url" class="card__link">Ссылка на репозиторий</a>
+                        </div>
+                    </div> -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Футер -->
+        <footer class="footer">
+            <div class="footer__company">© 2023 QuantumForge</div>
+            <a href="#" class="footer__opensource">Работает на OpenSource</a>
+        </footer>
+        <div id="menuOverlay" class="menu-overlay"></div>
+    </div>
 </body>
+
 </html>

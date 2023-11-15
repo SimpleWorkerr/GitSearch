@@ -36,22 +36,29 @@ namespace GitSearch
                              select
                                 new
                                 {
-                                    tempValue.id,
-                                    tempValue.name,
+                                    //tempValue.id,
+                                    //tempValue.name,
                                     tempValue.full_name,
-                                    tempValue._private,
-                                    tempValue.owner,
-                                    tempValue.description,
+                                    //tempValue._private,
+                                    //tempValue.owner,
+                                    //tempValue.description,
                                     tempValue.url,
-                                    tempValue.downloads_url,
-                                    tempValue.clone_url,
+                                    //tempValue.downloads_url,
+                                    //tempValue.clone_url,
                                     tempValue.created_at,
                                     tempValue.updated_at,
-                                    tempValue.pushed_at
+                                    //tempValue.pushed_at                                    
+                                    //tempValue.name,
+                                    tempValue.visibility,
+                                    tempValue.language,
+                                    tempValue.stargazers_count,
+                                    tempValue.watchers_count,
+                                    tempValue.forks_count,
+                                    tempValue.owner.avatar_url
                                 };
 
 
-                await response.WriteAsJsonAsync(fullResult, options);
+                await response.WriteAsJsonAsync(result, options);
             }
             
             else
