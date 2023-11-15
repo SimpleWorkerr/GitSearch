@@ -51,7 +51,7 @@ namespace GitSearch
                                 };
 
 
-                await response.WriteAsJsonAsync(result, options);
+                await response.WriteAsJsonAsync(fullResult, options);
             }
             
             else
