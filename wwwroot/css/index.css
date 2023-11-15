@@ -214,6 +214,7 @@ body {
   color: var(--text-color);
   font-weight: 700;
   margin-bottom: 10px;
+  overflow-wrap: break-word;
 }
 
 .card__link {
@@ -282,12 +283,20 @@ body {
 
 /* Адаптивность для маленьких экранов */
 @media (max-width: 768px) {
+  .logo {
+    font-size: 24px;
+  }
+
   .card {
     flex-basis: 100%;
   }
 
   .search-section__title {
-    font-size: var(--font-size-xlarge);
+    font-size: 35px;
+  }
+
+  .search-section__title {
+    font-size: 28px;
   }
 
   .nav {
