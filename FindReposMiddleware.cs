@@ -54,7 +54,7 @@ namespace GitSearch
                                     tempValue.language,                                                                
                                     tempValue.watchers_count,
                                     tempValue.forks_count,
-                                    tempValue.owner.avatar_url
+                                    tempValue.owner?.avatar_url
                                 };
 
 
