@@ -1,35 +1,33 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const searchForm = document.getElementById("search-form");
-    searchForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-        const projectName = document.getElementById("project-name").value;
-        const projectDescription = document.getElementById("project-description").value;
-        const apiURL = `https://localhost:7101/getRepoByArgs?description=${encodeURIComponent(projectDescription)}&name=${encodeURIComponent(projectName)}`;
+  const searchForm = document.getElementById("search-form");
+  searchForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    const projectName = document.getElementById("project-name").value;
+    const projectDescription = document.getElementById(
+      "project-description"
+    ).value;
+    const apiURL = `https://localhost:7101/getRepoByArgs?description=${encodeURIComponent(
+      projectDescription
+    )}&name=${encodeURIComponent(projectName)}`;
 
-        fetch(apiURL)
-            .then((response) => response.json())
-            .then((data) => {
-                createCards(data);
-            })
-            .catch((error) => console.error("Ошибка:", error));
-    });
+    fetch(apiURL)
+      .then((response) => response.json())
+      .then((data) => {
+        createCards(data);
+      })
+      .catch((error) => console.error("Ошибка:", error));
+  });
 });
 
 function createCards(repos) {
-    const cardsContainer = document.querySelector(".cards-container");
-    cardsContainer.innerHTML = ""; // Очищаем контейнер перед добавлением новых карточек
+  const cardsContainer = document.querySelector(".cards-container");
+  cardsContainer.innerHTML = ""; // Очищаем контейнер перед добавлением новых карточек
 
-    repos.forEach((repo) => {
-        const cardElement = createCardElement(repo);
-        cardsContainer.appendChild(cardElement);
-    });
+  repos.forEach((repo) => {
+    const cardElement = createCardElement(repo);
+    cardsContainer.appendChild(cardElement);
+  });
 }
-
-function createCardElement(repo) {
-    // Создаем элементы карточки и возвращаем готовый элемент 'card'
-    // ...
-}
-
 
 function createCardElement(repo) {
   // Создаем элементы карточки
@@ -50,15 +48,11 @@ function createCardElement(repo) {
 
   const visibility = document.createElement("p");
   visibility.className = "card__visibility";
-  visibility.textContent = repo.visibility;
+  visibility.textContent = `Видимость: ${repo.visibility}`;
 
   const stack = document.createElement("p");
   stack.className = "card__stack";
-  stack.textContent = `Используемый стек: ${repo.language || "Не указан"}`;
-
-  const stars = document.createElement("span");
-  stars.className = "card__stars";
-  stars.textContent = `Количество звёзд: ${repo.stargazers_count}`;
+  stack.textContent = `Используемый язык: ${repo.language || "Не указан"}`;
 
   const views = document.createElement("span");
   views.className = "card__views";
@@ -70,8 +64,8 @@ function createCardElement(repo) {
 
   const link = document.createElement("a");
   link.className = "card__link";
-  link.href = repo.url;
-  link.textContent = "Ссылка на репозиторий";
+  link.href = repo.html_url;
+  link.textContent = "Репозиторий на GitHub";
 
   // Собираем карточку
   card.appendChild(avatar);
@@ -82,7 +76,6 @@ function createCardElement(repo) {
 
   const stats = document.createElement("p");
   stats.className = "card__stats";
-  stats.appendChild(stars);
   stats.appendChild(views);
   stats.appendChild(forks);
   info.appendChild(stats);
