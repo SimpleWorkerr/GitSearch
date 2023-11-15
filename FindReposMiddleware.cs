@@ -5,11 +5,14 @@ using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Text.Unicode;
+using System.Web;
 
 namespace GitSearch
 {
     public class FindReposMiddleware
     {
+        private static string[] languages = { "python", "c++", "java", "javascript", "c#", "ruby", "php", "swift", "go", "kotlin", "rust", "typescript", "perl", "c", "lua", "r", "matlab", "haskerll", "groovy", "scala" };
+
         private RequestDelegate _next;
 
         public FindReposMiddleware(RequestDelegate next)
@@ -30,7 +33,20 @@ namespace GitSearch
 
             if (request.Path == "/getRepoByArgs")
             {
-                var fullResult = await repoService.GetRepos($"https://api.github.com/search/repositories?q={query["description"]}+in:description+{query["name"]}+in:name");
+                string url = $"https://api.github.com/search/repositories?q={query["description"]}+in:description+{query["name"]}";
+
+                string? description = query["description"].ToString().ToLower();
+                string langParam = "";
+
+                foreach(var lang in languages)
+                {
+                    if (description.Contains(lang))
+                    {
+                        langParam += $"+language:{lang.Replace("+", "%2B").Replace("#", "%23")}";
+                    }
+                }
+
+                var fullResult = await repoService.GetRepos(url + langParam + "&per_page=100");
 
                 var result = from tempValue in fullResult?.items
                              select
