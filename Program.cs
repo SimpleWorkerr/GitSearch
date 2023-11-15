@@ -5,17 +5,14 @@ namespace GitSearch
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddTransient<FindReposService>();
+
             var app = builder.Build();
 
             app.UseStaticFiles();
 
-            app.Run(async (HttpContext context) =>
-            {
-                HttpResponse response = context.Response;
-                HttpRequest request = context.Request;
-
-                await response.SendFileAsync("C:..\\GitSearch\\wwwroot\\index.html");
-            });
+            app.UseMiddleware<FindReposMiddleware>("https://api.github.com/search/repositories?q=asp.net+in:description+example+in:name");
 
             app.Run();
         }
