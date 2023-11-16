@@ -70,7 +70,7 @@ namespace GitSearch
                     {
                         if (lang.Item1 == param)
                         {
-                            user_input_description = user_input_description.Replace(param, "");
+                            // user_input_description = user_input_description.Replace(param, "");
                             langParam += $"+language:{lang.Item2}";
                         }
 
