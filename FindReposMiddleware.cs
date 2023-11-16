@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Text.Unicode;
 using System.Web;
 using System.Xml.Linq;
+using System.Linq;
 
 namespace GitSearch
 {
@@ -43,7 +44,7 @@ namespace GitSearch
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context, FindReposService repoService)
+        public async Task InvokeAsync(HttpContext context, FindReposService repoService, DataAnalysisService anylysisSevice)
         {
             var response = context.Response;
             var request = context.Request;
@@ -74,16 +75,19 @@ namespace GitSearch
                     }
                 }
 
-                string url = $"https://api.github.com/search/repositories?q={query["name"]} {description}+in:name,topic,description";
+                string url = $"https://api.github.com/search/repositories?q={query["name"]}" + langParam + "&per_page=100";
+                string url_topic = $"https://api.github.com/search/repositories?q={query["name"]} {description}+in:topic" + langParam + "&per_page=100"; ;
+                string url_name = $"https://api.github.com/search/repositories?q={query["name"]} {description}+in:name" + langParam + "&per_page=100"; ;
+                string url_description = $"https://api.github.com/search/repositories?q={query["name"]} {description}+in:description" + langParam + "&per_page=100"; ;
 
-                url = url + langParam + "&per_page=100";
+                var fullResultUrl = (await repoService.GetRepos(url));
+                var fullResultUrl_topic = (await repoService.GetRepos(url_topic));
+                var fullResultUrl_name = (await repoService.GetRepos(url_name));
+                var fullResultUrl_description = (await repoService.GetRepos(url_description));
 
-                Console.WriteLine(url);
-                Console.WriteLine(description);
+                var analysResult = await anylysisSevice.GetData(fullResultUrl?.items?.Concat(fullResultUrl_topic?.items)?.Concat(fullResultUrl_name?.items)?.Concat(fullResultUrl_description?.items).ToList(), "");
 
-                var fullResult = await repoService.GetRepos(url);
-
-                var result = from tempValue in fullResult?.items
+                var result = from tempValue in analysResult
                              select
                                 new
                                 {
