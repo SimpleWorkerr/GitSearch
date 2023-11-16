@@ -10,7 +10,7 @@ namespace GitSearch
     {
         private HttpClient _client = new HttpClient();
 
-        public async Task<Item[]?> GetData(Item[] items, string url)
+        public async Task<Item[]> GetData((Item[], string, string) items, string url)
         {
             using var response = await _client.PutAsJsonAsync(url, items);
 

@@ -85,7 +85,7 @@ namespace GitSearch
                 var fullResultUrl_name = (await repoService.GetRepos(url_name));
                 var fullResultUrl_description = (await repoService.GetRepos(url_description));
 
-                var analysResult = await anylysisSevice.GetData(fullResultUrl?.items?.Concat(fullResultUrl_topic?.items)?.Concat(fullResultUrl_name?.items)?.Concat(fullResultUrl_description?.items).ToList(), "");
+                var analysResult = await anylysisSevice.GetData((fullResultUrl?.items.Concat(fullResultUrl_topic?.items).Concat(fullResultUrl_name?.items).Concat(fullResultUrl_description?.items)?.ToArray(), description, query["name"]), "");
 
                 var result = from tempValue in analysResult
                              select
