@@ -8,6 +8,7 @@ using System.Text.Unicode;
 using System.Web;
 using System.Xml.Linq;
 using System.Linq;
+using System.IO;
 
 namespace GitSearch
 {
@@ -34,7 +35,7 @@ namespace GitSearch
                 ("matlab", "matlab"),
                 ("haskerll", "haskerll"),
                 ("groovy", "groovy"),
-                ("scala", "scala") 
+                ("scala", "scala")
         };
 
         private RequestDelegate _next;
@@ -57,35 +58,42 @@ namespace GitSearch
 
             if (request.Path == "/getRepoByArgs")
             {
-                
 
-                string? description = query["description"].ToString().ToLower();
+
+                string? user_input_description = query["description"].ToString().ToLower();
+                string? user_input_name = query["name"].ToString().ToLower();
                 string langParam = "";
 
-                foreach(var lang in languages)
+                foreach (var lang in languages)
                 {
-                    foreach(var param in description.Split(' '))
+                    foreach (var param in user_input_description.Split(' '))
                     {
-                        if(lang.Item1 == param)
+                        if (lang.Item1 == param)
                         {
-                            description = description.Replace(param, "");
+                            user_input_description = user_input_description.Replace(param, "");
                             langParam += $"+language:{lang.Item2}";
                         }
-                            
+
                     }
                 }
 
                 string url = $"https://api.github.com/search/repositories?q={query["name"]}" + langParam + "&per_page=100";
-                string url_topic = $"https://api.github.com/search/repositories?q={query["name"]} {description}+in:topic" + langParam + "&per_page=100"; ;
-                string url_name = $"https://api.github.com/search/repositories?q={query["name"]} {description}+in:name" + langParam + "&per_page=100"; ;
-                string url_description = $"https://api.github.com/search/repositories?q={query["name"]} {description}+in:description" + langParam + "&per_page=100"; ;
+                string url_topic = $"https://api.github.com/search/repositories?q={query["name"]} {user_input_description}+in:topic" + langParam + "&per_page=100"; ;
+                string url_name = $"https://api.github.com/search/repositories?q={query["name"]} {user_input_description}+in:name" + langParam + "&per_page=100"; ;
+                string url_description = $"https://api.github.com/search/repositories?q={query["name"]} {user_input_description}+in:description" + langParam + "&per_page=100"; ;
 
                 var fullResultUrl = (await repoService.GetRepos(url));
                 var fullResultUrl_topic = (await repoService.GetRepos(url_topic));
                 var fullResultUrl_name = (await repoService.GetRepos(url_name));
                 var fullResultUrl_description = (await repoService.GetRepos(url_description));
 
-                var analysResult = await anylysisSevice.GetData((fullResultUrl?.items.Concat(fullResultUrl_topic?.items).Concat(fullResultUrl_name?.items).Concat(fullResultUrl_description?.items)?.ToArray(), description, query["name"]), "");
+                var fullResult = fullResultUrl?.items.Concat(fullResultUrl_topic?.items).Concat(fullResultUrl_name?.items).Concat(fullResultUrl_description?.items)?.ToArray();
+                
+                await File.WriteAllTextAsync("result.txt", JsonSerializer.Serialize(new { fullResult, user_input_description, user_input_name }, options));
+
+                //Console.WriteLine(JsonSerializer.Serialize(new{fullResultUrl, user_input_description, user_input_name}, options));
+
+                var analysResult = await anylysisSevice.GetData(new {fullResult, user_input_description, user_input_name}, "http://127.0.0.1:5000/analyze");
 
                 var result = from tempValue in analysResult
                              select

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -10,15 +11,15 @@ namespace GitSearch
     {
         private HttpClient _client = new HttpClient();
 
-        public async Task<Item[]> GetData((Item[], string, string) items, string url)
+        public async Task<Item[]?> GetData(object items, string url)
         {
-            using var response = await _client.PutAsJsonAsync(url, items);
+            using var response = await _client.PostAsJsonAsync(url, items);
 
             if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
                 Console.WriteLine("Ошибка");
             }
-
+            await File.WriteAllTextAsync("resultfromflask.txt", await response.Content.ReadAsStringAsync());
             // десериализуем ответ в объект Person
             Item[]? resItems = await response.Content.ReadFromJsonAsync<Item[]>();
 
