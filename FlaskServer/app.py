@@ -27,7 +27,7 @@ def analyze_repositories():
     user_input_description = data['user_input_description']  # Описание, введенное пользователем
     items = data['fullResult'];
 
-    result = data
+    result = items
 
     # Сопоставление элементов с их кластерами
     # for i, item in enumerate(items):
@@ -36,7 +36,7 @@ def analyze_repositories():
     #         'description': item.description,
     #     })
 
-    return jsonify(result)
+    return jsonify(items)
 
 if __name__ == '__main__':
     app.run(debug=True)
