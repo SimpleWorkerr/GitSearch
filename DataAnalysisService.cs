@@ -11,7 +11,7 @@ namespace GitSearch
     {
         private HttpClient _client = new HttpClient();
 
-        public async Task<Item[]?> GetData(object items, string url)
+        public async Task<List<Item>?> GetData(object items, string url)
         {
             using var response = await _client.PostAsJsonAsync(url, items);
 
@@ -21,7 +21,7 @@ namespace GitSearch
             }
             await File.WriteAllTextAsync("resultfromflask.txt", await response.Content.ReadAsStringAsync());
             // десериализуем ответ в объект Person
-            Item[]? resItems = await response.Content.ReadFromJsonAsync<Item[]>();
+            List<Item>? resItems = await response.Content.ReadFromJsonAsync<List<Item>?>();
 
             return resItems;
         }

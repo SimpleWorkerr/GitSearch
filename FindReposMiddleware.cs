@@ -93,6 +93,8 @@ namespace GitSearch
 
                 //Console.WriteLine(JsonSerializer.Serialize(new{fullResultUrl, user_input_description, user_input_name}, options));
 
+
+
                 var analysResult = await anylysisSevice.GetData(new {fullResult, user_input_description, user_input_name}, "http://127.0.0.1:5000/analyze");
 
                 var result = from tempValue in analysResult
