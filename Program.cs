@@ -9,6 +9,7 @@ namespace GitSearch
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddTransient<FindReposService>();
+            builder.Services.AddTransient<DataAnalysisService>();
 
             var app = builder.Build();
 
