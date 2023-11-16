@@ -6,12 +6,35 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Text.Unicode;
 using System.Web;
+using System.Xml.Linq;
 
 namespace GitSearch
 {
     public class FindReposMiddleware
     {
-        private static string[] languages = { "python", "c++", "java", "javascript", "c#", "ruby", "php", "swift", "go", "kotlin", "rust", "typescript", "perl", "c", "lua", "r", "matlab", "haskerll", "groovy", "scala" };
+        private static (string, string)[] languages =
+            {
+                ("python","python"),
+                ("c++", "c%2B%2B"),
+                ("java", "java"),
+                ("javascript", "javascript"),
+                ("c#", "c%23"),
+                ("ruby", "ruby"),
+                ("php", "php"),
+                ("swift", "swift"),
+                ("go", "go"),
+                ("kotlin", "kotlin"),
+                ("rust", "rust"),
+                ("typescript", "typescript"),
+                ("perl", "perl"),
+                ("c", "c"),
+                ("lua", "lua"),
+                ("r", "r"),
+                ("matlab", "matlab"),
+                ("haskerll", "haskerll"),
+                ("groovy", "groovy"),
+                ("scala", "scala") 
+        };
 
         private RequestDelegate _next;
 
@@ -33,20 +56,32 @@ namespace GitSearch
 
             if (request.Path == "/getRepoByArgs")
             {
-                string url = $"https://api.github.com/search/repositories?q={query["description"]}+in:description+{query["name"]}";
+                
 
                 string? description = query["description"].ToString().ToLower();
                 string langParam = "";
 
                 foreach(var lang in languages)
                 {
-                    if (description.Contains(lang))
+                    foreach(var param in description.Split(' '))
                     {
-                        langParam += $"+language:{lang.Replace("+", "%2B").Replace("#", "%23")}";
+                        if(lang.Item1 == param)
+                        {
+                            description = description.Replace(param, "");
+                            langParam += $"+language:{lang.Item2}";
+                        }
+                            
                     }
                 }
 
-                var fullResult = await repoService.GetRepos(url + langParam + "&per_page=100");
+                string url = $"https://api.github.com/search/repositories?q={query["name"]} {description}+in:name,topic,description";
+
+                url = url + langParam + "&per_page=100";
+
+                Console.WriteLine(url);
+                Console.WriteLine(description);
+
+                var fullResult = await repoService.GetRepos(url);
 
                 var result = from tempValue in fullResult?.items
                              select
@@ -67,7 +102,7 @@ namespace GitSearch
                                     //tempValue.pushed_at                                    
                                     //tempValue.name,
                                     tempValue.visibility,
-                                    tempValue.language,                                                                
+                                    tempValue.language,
                                     tempValue.watchers_count,
                                     tempValue.forks_count,
                                     tempValue.owner?.avatar_url
@@ -76,7 +111,7 @@ namespace GitSearch
 
                 await response.WriteAsJsonAsync(result, options);
             }
-            
+
             else
                 await _next.Invoke(context);
         }
