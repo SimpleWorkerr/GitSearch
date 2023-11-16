@@ -41,7 +41,7 @@ namespace GitSearch
                                     tempValue.full_name,
                                     //tempValue._private,
                                     //tempValue.owner,
-                                    //tempValue.description,
+                                    tempValue.description,
                                     //tempValue.url,
                                     //tempValue.downloads_url,
                                     //tempValue.clone_url,
