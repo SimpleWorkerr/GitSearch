@@ -2,79 +2,91 @@
 <html lang="ru">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Поиск аналогов проектов на GitHub</title>
-    <!-- Стили css -->
-    <link rel="stylesheet" href="./css/default.css">
-    <link rel="stylesheet" href="./css/index.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Поиск аналогов проектов на GitHub</title>
+  <!-- Стили css -->
+  <link rel="stylesheet" href="./css/default.css" />
+  <link rel="stylesheet" href="./css/index.css" />
 
-    <!-- Подключение шрифтов -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+  <!-- Подключение шрифтов -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Подключение иконок -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
 </head>
 
 <body>
-    <div class="page-wrapper">
-        <!-- Подключение скриптов -->
-        <script defer src="./js/menu-button.js"></script>
-        <script defer src="./js/theme-button.js"></script>
-        <script defer src="./js/main.js"></script>
+  <div class="page-wrapper">
+    <!-- Подключение скриптов -->
+    <script defer src="./js/menu-button.js"></script>
+    <script defer src="./js/theme-button.js"></script>
+    <script defer src="./js/main.js"></script>
 
-        <!-- Шапка сайта с логотипом и навигацией -->
-        <header class="header">
-            <div class="logo">> Quantum_Forge_Search</div>
-            <button class="menu-button" id="menuButton"></button>
-            <nav class="nav" id="nav">
-                <ul class="nav__list">
-                    <li class="nav__item"><a href="#" class="nav__link">Главная</a></li>
-                    <li class="nav__item"><a href="#" class="nav__link">О проекте</a></li>
-                    <li class="nav__item"><a href="#" class="nav__link">Контакты</a></li>
-                    <!-- <button id="theme-toggle">Переключить тему</button> -->
-                </ul>
-            </nav>
-        </header>
+    <!-- Шапка сайта с логотипом и навигацией -->
+    <header class="header">
+      <div class="logo">> QuantumForgeSearch</div>
+      <button class="menu__button" id="menuButton">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav class="nav" id="nav">
+        <ul class="nav__list">
+          <li class="nav__item"><a href="#" class="nav__link">Главная</a></li>
+          <li class="nav__item">
+            <a href="#" class="nav__link">О проекте</a>
+          </li>
+          <li class="nav__item">
+            <a href="#" class="nav__link">Контакты</a>
+          </li>
+          <button id="navButton" class="nav__button">
+            <i class="fas fa-moon"></i>
+          </button>
+        </ul>
+      </nav>
+    </header>
 
-        <!-- Основное содержимое страницы -->
-        <main class="content">
-            <section class="search-section">
-                <h1 class="search-section__title">Поиск репозиториев</h1>
-                <p class="search-section__description">Введите название и описание проекта для поиска аналогичных
-                    репозиториев на GitHub.</p>
-                <div class="search">
-                    <form class="search__form" id="search-form">
-                        <div class="search__field">
-                            <label for="project-name" class="search__label">Название проекта:</label>
-                            <input type="text" id="project-name" class="search__input search__input--name"
-                                placeholder="Введите название">
-                        </div>
-                        <div class="search__field">
-                            <label for="project-description" class="search__label">Описание проекта:</label>
-                            <textarea id="project-description" class="search__input search__input--description"
-                                placeholder="Введите описание"></textarea>
-                        </div>
-                        <button type="submit" class="search__button">Поиск</button>
-                    </form>
-                </div>
-            </section>
+    <!-- Основное содержимое страницы -->
+    <main class="content">
+      <section class="search-section">
+        <h1 class="search-section__title">Поиск репозиториев</h1>
+        <p class="search-section__description">
+          Введите название и описание проекта для поиска аналогичных
+          репозиториев на GitHub.
+        </p>
+        <div class="search">
+          <form class="search__form" id="search-form">
+            <div class="search__field">
+              <label for="project-name" class="search__label">Название проекта</label>
+              <input type="text" id="project-name" class="search__input search__input--name"
+                placeholder="Введите название" />
+            </div>
+            <div class="search__field">
+              <label for="project-description" class="search__label">Описание проекта</label>
+              <textarea id="project-description" class="search__input search__input--description"
+                placeholder="Введите описание"></textarea>
+            </div>
+            <button type="submit" class="search__button">Поиск</button>
+          </form>
+        </div>
+      </section>
 
-            <section class="results-section">
-                <h2 class="results-section__title">Результаты поиска</h2>
-                <!-- Карточки репозитория -->
-                <div class="cards-container">
-                </div>
-            </section>
-        </main>
+      <section class="results-section">
+        <h2 class="results-section__title">Результаты поиска</h2>
+        <!-- Карточки репозитория -->
+        <div class="cards-container"></div>
+      </section>
+    </main>
 
-        <!-- Футер -->
-        <footer class="footer">
-            <div class="footer__company">© 2023 QuantumForge</div>
-            <a href="#" class="footer__opensource">Работает на OpenSource</a>
-        </footer>
-        <div id="menuOverlay" class="menu-overlay"></div>
-    </div>
+    <!-- Футер -->
+    <footer class="footer">
+      <div class="footer__company">© 2023 QuantumForge</div>
+      <a href="#" class="footer__opensource">Работает на OpenSource</a>
+    </footer>
+    <div id="menuOverlay" class="menu-overlay"></div>
+  </div>
 </body>
 
 </html>
