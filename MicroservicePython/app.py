@@ -40,9 +40,7 @@ def analyze():
 
     analysis_result = analyze_repositories(user_input_name, user_input_description, items)
 
-    print(items)
     return jsonify(analysis_result)
 
 if __name__ == '__main__':
     app.run(debug=True)
-

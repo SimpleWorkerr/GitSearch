@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  var themeToggleButton = document.getElementById("theme-toggle");
+  var themeToggleButton = document.getElementById("navButton");
   // Загрузить сохранённую тему из localStorage
   var savedTheme = localStorage.getItem("theme") || "light"; // Светлая тема по умолчанию
   document.documentElement.setAttribute("data-theme", savedTheme);
