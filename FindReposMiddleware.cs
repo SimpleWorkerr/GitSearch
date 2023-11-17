@@ -77,22 +77,22 @@ namespace GitSearch
                     }
                 }
 
-                string url = $"https://api.github.com/search/repositories?q={query["name"]}" + langParam + "&per_page=100";
-                string url_topic = $"https://api.github.com/search/repositories?q={query["name"]} {user_input_description}+in:topic" + langParam + "&per_page=100"; ;
-                string url_name = $"https://api.github.com/search/repositories?q={query["name"]} {user_input_description}+in:name" + langParam + "&per_page=100"; ;
-                string url_description = $"https://api.github.com/search/repositories?q={query["name"]} {user_input_description}+in:description" + langParam + "&per_page=100"; ;
+                //string url = $"https://api.github.com/search/repositories?q={user_input_name}" + langParam + "&per_page=100";
+                string url_description = $"https://api.github.com/search/repositories?q={user_input_name} {user_input_description}+in:description" + langParam + "&per_page=50";
 
-                var fullResultUrl = (await repoService.GetRepos(url));
-                var fullResultUrl_topic = (await repoService.GetRepos(url_topic));
-                var fullResultUrl_name = (await repoService.GetRepos(url_name));
+                //var fullResultUrl = (await repoService.GetRepos(url));
+
                 var fullResultUrl_description = (await repoService.GetRepos(url_description));
 
-                var fullResult = fullResultUrl?.items.Concat(fullResultUrl_topic?.items).Concat(fullResultUrl_name?.items).Concat(fullResultUrl_description?.items)?.ToArray();
+                List<Item>? fullResult = fullResultUrl_description?.items.ToList();
+
+                for(int i = 3; i <= user_input_name.Length; i++)
+                {
+                    Console.WriteLine(user_input_name.Substring(0, i));
+                    fullResult.AddRange((await repoService.GetRepos($"https://api.github.com/search/repositories?q={user_input_name.Substring(0, i)}" + langParam + "&per_page=10")).items);
+                }
                 
                 await File.WriteAllTextAsync("result.txt", JsonSerializer.Serialize(new { fullResult, user_input_description, user_input_name }, options));
-
-                //Console.WriteLine(JsonSerializer.Serialize(new{fullResultUrl, user_input_description, user_input_name}, options));
-
 
 
                 var analysResult = await anylysisSevice.GetData(new {fullResult, user_input_description, user_input_name}, "http://127.0.0.1:5000/analyze");
